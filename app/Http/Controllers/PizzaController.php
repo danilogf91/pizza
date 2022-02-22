@@ -6,6 +6,7 @@ use App\Http\Requests\PizzaStoreRequest;
 use App\Http\Requests\PizzaUpdateRequest;
 use App\Models\Pizza;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 
 class PizzaController extends Controller
@@ -90,10 +91,11 @@ class PizzaController extends Controller
 
         if($request->has('image')){
             $path = $request->image->store('public/pizza');
+            Storage::delete($pizza->image);
         }else{
             $path = $pizza->image;
         }
-
+/*
         $pizza = new Pizza;
         $pizza->name = $request->name;
         $pizza->description = $request->description;
@@ -103,9 +105,18 @@ class PizzaController extends Controller
         $pizza->category = $request->category;
         $pizza->image = $path;
         $pizza->save();
+*/
+        $pizza->update([
+            "name" => $request->name,
+            "description" => $request->description,
+            "small_pizza_price" => $request->small_pizza_price,
+            "medium_pizza_price" => $request->medium_pizza_price,
+            "large_pizza_price" => $request->large_pizza_price,
+            "category" => $request->category,
+            "image" => $path,
+        ]);
 
         return redirect()->route('pizza.index')->with('message', 'Pizza update successfully!');
-
     }
 
     /**
