@@ -13,7 +13,10 @@
             </nav>
 
             <div class="card">
-                <div class="card-header">order</div>
+                <div class="card-header">order
+                    <a class="me-2 float-end" href="{{route('pizza.index')}}" >View Pizza</a>
+                    <a class="me-2 float-end" href="{{route('pizza.create')}}" >Create Pizza</a>
+                </div>
 
                 <div class="card-body">
                     <table class="table table-bordered">
